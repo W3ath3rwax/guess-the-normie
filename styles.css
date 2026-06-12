@@ -144,6 +144,15 @@ h1 {
   text-transform: uppercase;
 }
 
+.home-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-nav a:hover {
+  color: var(--accent);
+}
+
 .home-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);

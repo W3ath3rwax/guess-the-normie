@@ -99,9 +99,10 @@ function renderSetup() {
           </div>
         </div>
         <nav class="home-nav" aria-label="Home navigation">
-          <span>Play</span>
-          <span>Scores soon</span>
-          <span>About soon</span>
+          <a href="https://www.normies.art/" target="_blank" rel="noreferrer">Normies</a>
+          <a href="https://opensea.io/collection/normies" target="_blank" rel="noreferrer">OpenSea</a>
+          <a href="https://x.com/normiesART" target="_blank" rel="noreferrer">Normies X</a>
+          <a href="https://x.com/serc" target="_blank" rel="noreferrer">Serc X</a>
         </nav>
       </header>
 
@@ -150,14 +151,6 @@ function renderSetup() {
         </aside>
       </section>
 
-      <section class="soon-band">
-        <span>Discord Leaderboard</span>
-        <span>Verified players only</span>
-        <span>Daily Challenge</span>
-        <span>Best of 3</span>
-        <span>Visit Normies</span>
-      </section>
-
       <section class="recent-section">
         <div class="section-heading">
           <div>
@@ -173,6 +166,14 @@ function renderSetup() {
               : renderRecentPlaceholders()
           }
         </div>
+      </section>
+
+      <section class="soon-band">
+        <span>Discord Leaderboard</span>
+        <span>Verified players only</span>
+        <span>Daily Challenge</span>
+        <span>Best of 3</span>
+        <span>Visit Normies</span>
       </section>
 
       <footer class="home-footer">
