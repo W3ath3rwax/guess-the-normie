@@ -102,7 +102,7 @@ function renderSetup() {
           <a href="https://www.normies.art/" target="_blank" rel="noreferrer">Normies</a>
           <a href="https://opensea.io/collection/normies" target="_blank" rel="noreferrer">OpenSea</a>
           <a href="https://x.com/normiesART" target="_blank" rel="noreferrer">Normies X</a>
-          <a href="https://x.com/serc" target="_blank" rel="noreferrer">Serc X</a>
+          <a href="https://x.com/serc1n" target="_blank" rel="noreferrer">Serc X</a>
         </nav>
       </header>
 
@@ -702,7 +702,7 @@ function renderCard(normie) {
   const canRestore = manuallyHidden && !answerEliminated;
   return `
     <article class="card ${eliminated ? "eliminated" : ""} ${manuallyHidden ? "manual" : ""}">
-      <img src="${escapeHtml(normie.image)}" alt="${escapeHtml(normie.name)}" />
+      ${renderNormieImage(normie)}
       <div class="token">
         <span>#${normie.id}</span>
         <button data-toggle-hidden="${normie.id}" ${state.ended || answerEliminated ? "disabled" : ""}>${canRestore ? "Restore" : "Hide"}</button>
@@ -1031,6 +1031,7 @@ function saveRecentDiscovered(result) {
   const item = {
     tokenId: result.secretTokenId,
     image: state.secret.image,
+    fallbackImage: state.secret.fallbackImage,
     mode: result.mode,
     boardType: result.boardType,
     score: result.score,
@@ -1087,7 +1088,7 @@ function renderEndScreen() {
       <section class="end-card">
         <div class="end-layout">
           <div class="secret-reveal">
-            <img src="${escapeHtml(state.secret.image)}" alt="${escapeHtml(state.secret.name)}" />
+            ${renderNormieImage(state.secret)}
             <span>Secret #${result.secretTokenId}</span>
           </div>
           <div>
@@ -1120,6 +1121,11 @@ function renderEndScreen() {
   `;
 }
 
+function renderNormieImage(normie) {
+  const fallback = normie.fallbackImage ? ` data-fallback-src="${escapeHtml(normie.fallbackImage)}"` : "";
+  return `<img src="${escapeHtml(normie.image)}" alt="${escapeHtml(normie.name)}"${fallback} />`;
+}
+
 function capitalize(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
@@ -1144,3 +1150,15 @@ document.addEventListener("change", (event) => {
     .map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`)
     .join("");
 });
+
+document.addEventListener(
+  "error",
+  (event) => {
+    if (!(event.target instanceof HTMLImageElement)) return;
+    const fallback = event.target.dataset.fallbackSrc;
+    if (!fallback) return;
+    event.target.dataset.fallbackSrc = "";
+    event.target.src = fallback;
+  },
+  true
+);
