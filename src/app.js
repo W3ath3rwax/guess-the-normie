@@ -138,19 +138,6 @@ function renderSetup() {
             <p class="subtitle">${state.setupMessage || "No connection, no signature. Paste an address and play with its Normies first."}</p>
           </div>
         </div>
-
-        <aside class="status-panel">
-          <p class="eyebrow">Prototype status</p>
-          <div class="status-list">
-            <div><span>Local cache</span><strong>${cacheCount}</strong></div>
-            <div><span>Discord auth</span><strong>soon</strong></div>
-            <div><span>Daily challenge</span><strong>soon</strong></div>
-            <div><span>Best of 3</span><strong>soon</strong></div>
-          </div>
-          <div class="setup-actions">
-            <button id="clear-cache">Clear Local Cache</button>
-          </div>
-        </aside>
       </section>
 
       <section class="recent-section">
@@ -175,7 +162,9 @@ function renderSetup() {
         <span>Verified players only</span>
         <span>Daily Challenge</span>
         <span>Best of 3</span>
-        <span>Visit Normies</span>
+        <span>Local cache ${cacheCount}</span>
+        <span>Discord auth soon</span>
+        <button id="clear-cache">Clear Local Cache</button>
       </section>
 
       <footer class="home-footer">

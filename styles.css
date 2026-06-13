@@ -155,13 +155,10 @@ h1 {
 
 .home-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
-  gap: 18px;
-  align-items: stretch;
+  grid-template-columns: 1fr;
 }
 
 .launch-panel,
-.status-panel,
 .recent-section {
   background: var(--panel);
   border: 2px solid var(--line);
@@ -187,28 +184,6 @@ h1 {
   margin-top: 14px;
 }
 
-.status-list {
-  display: grid;
-  gap: 8px;
-}
-
-.status-list div {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
-  border: 1px solid var(--line);
-  background: #0d0e12;
-  padding: 10px;
-}
-
-.status-list span {
-  color: var(--muted);
-}
-
-.status-list strong {
-  color: var(--accent);
-}
-
 .soon-band {
   display: flex;
   gap: 8px;
@@ -218,13 +193,19 @@ h1 {
   padding: 12px;
 }
 
-.soon-band span {
+.soon-band span,
+.soon-band button {
   border: 1px solid var(--line);
   background: #0d0e12;
   color: var(--accent);
   padding: 7px 9px;
   font-size: 12px;
   text-transform: uppercase;
+}
+
+.soon-band button {
+  min-height: auto;
+  box-shadow: none;
 }
 
 .section-heading {
@@ -676,7 +657,6 @@ a.recent-normie:hover {
   }
 
   .launch-panel,
-  .status-panel,
   .recent-section {
     padding: 14px;
   }
