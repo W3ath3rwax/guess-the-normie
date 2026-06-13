@@ -179,10 +179,10 @@ function renderSetup() {
 
       <footer class="home-footer">
         <span>made with &lt;3 by @LaurentMoulin</span>
-        <span>support wallet ---</span>
-        <span>ETH ---</span>
-        <span>BTC ---</span>
-        <span>Normies floor ---</span>
+        <span>support wallet 0x70f44549A7C78a2916D6386B17a22714Db1BC68e</span>
+        <span id="eth-price">ETH ---</span>
+        <span id="btc-price">BTC ---</span>
+        <span>Normies floor soon</span>
       </footer>
     </main>
     ${state.emptyWalletAddress ? renderEmptyWalletModal() : ""}
@@ -214,6 +214,8 @@ function renderSetup() {
 
   const emptyRandom = document.querySelector("#empty-wallet-random");
   if (emptyRandom) emptyRandom.addEventListener("click", startGame);
+
+  refreshMarketPrices();
 }
 
 function renderRecentNormie(item) {
@@ -238,6 +240,28 @@ function renderRecentPlaceholders() {
       `,
     )
     .join("");
+}
+
+async function refreshMarketPrices() {
+  const [ethPrice, btcPrice] = await Promise.all([fetchSpotPrice("ETH"), fetchSpotPrice("BTC")]);
+  const ethElement = document.querySelector("#eth-price");
+  const btcElement = document.querySelector("#btc-price");
+
+  if (ethElement) ethElement.textContent = `ETH ${ethPrice || "---"}`;
+  if (btcElement) btcElement.textContent = `BTC ${btcPrice || "---"}`;
+}
+
+async function fetchSpotPrice(symbol) {
+  try {
+    const response = await fetch(`https://api.coinbase.com/v2/prices/${symbol}-USD/spot`);
+    if (!response.ok) return "";
+    const payload = await response.json();
+    const amount = Number(payload?.data?.amount);
+    if (!Number.isFinite(amount)) return "";
+    return `$${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+  } catch {
+    return "";
+  }
 }
 
 async function startGame() {
