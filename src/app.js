@@ -1,4 +1,5 @@
 const API_BASE = "https://api.normies.art";
+const NORMIES_CONTRACT = "0x9Eb6E2025B64f340691e424b7fe7022fFDE12438";
 const BOARD_SIZE = 24;
 const TOKEN_COUNT = 10000;
 const CACHE_VERSION = "v1-original";
@@ -220,11 +221,11 @@ function renderSetup() {
 
 function renderRecentNormie(item) {
   return `
-    <article class="recent-normie">
+    <a class="recent-normie" href="${getOpenSeaAssetUrl(item.tokenId)}" target="_blank" rel="noreferrer" title="Open Normie #${item.tokenId} on OpenSea">
       <img src="${escapeHtml(item.image)}" alt="Normie #${item.tokenId}" loading="lazy" />
       <span>#${item.tokenId}</span>
       <small>${capitalize(item.mode)} ${item.score}</small>
-    </article>
+    </a>
   `;
 }
 
@@ -262,6 +263,10 @@ async function fetchSpotPrice(symbol) {
   } catch {
     return "";
   }
+}
+
+function getOpenSeaAssetUrl(tokenId) {
+  return `https://opensea.io/assets/ethereum/${NORMIES_CONTRACT}/${tokenId}`;
 }
 
 async function startGame() {
