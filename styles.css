@@ -322,8 +322,8 @@ h1 {
 .logo-loader .lit {
   background: #f5f5f0;
   opacity: 0;
-  animation: pixelReveal 1.25s steps(1, end) infinite;
-  animation-delay: calc(var(--i) * 70ms);
+  animation: pixelReveal 900ms steps(1, end) infinite;
+  animation-delay: calc(var(--i) * 38ms);
 }
 
 @keyframes pixelReveal {

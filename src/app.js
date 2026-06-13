@@ -5,6 +5,7 @@ const CACHE_VERSION = "v1-original";
 const CACHE_KEY = "guessTheNormieCache";
 const RECENT_DISCOVERED_KEY = "guessTheNormieRecentDiscovered";
 const RECENT_DISCOVERED_LIMIT = 12;
+const MIN_LOADING_MS = 1000;
 
 const state = {
   mode: "beginner",
@@ -243,6 +244,7 @@ async function startGame() {
   state.boardType = "random";
   state.walletOwnedCount = 0;
   app.innerHTML = renderLoadingScreen("Building the board...", "Fetching Normies and balancing traits.");
+  const loadingStartedAt = Date.now();
 
   resetGame();
 
@@ -251,6 +253,7 @@ async function startGame() {
     await prepareBoardImages(state.board);
     state.secret = state.board[Math.floor(Math.random() * state.board.length)];
     state.remaining = new Set(state.board.map((normie) => normie.id));
+    await waitForMinimumLoadingTime(loadingStartedAt);
     renderGame();
   } catch (error) {
     app.innerHTML = `
@@ -278,6 +281,7 @@ async function startWalletGame() {
     "Building the wallet board...",
     "Reading owned Normies and filling the board with wild Normies.",
   );
+  const loadingStartedAt = Date.now();
 
   resetGame();
   state.boardType = "wallet";
@@ -297,6 +301,7 @@ async function startWalletGame() {
     await prepareBoardImages(state.board);
     state.secret = state.board[Math.floor(Math.random() * state.board.length)];
     state.remaining = new Set(state.board.map((normie) => normie.id));
+    await waitForMinimumLoadingTime(loadingStartedAt);
     renderGame();
   } catch (error) {
     state.boardType = "random";
@@ -353,6 +358,12 @@ function renderLogoPixels() {
       }),
     )
     .join("");
+}
+
+function waitForMinimumLoadingTime(startedAt) {
+  const elapsed = Date.now() - startedAt;
+  const remaining = Math.max(0, MIN_LOADING_MS - elapsed);
+  return new Promise((resolve) => window.setTimeout(resolve, remaining));
 }
 
 function resetGame() {
