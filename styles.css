@@ -295,6 +295,53 @@ h1 {
   padding: 24px;
 }
 
+.loading-panel {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  align-items: center;
+}
+
+.logo-loader {
+  width: 138px;
+  height: 138px;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  padding: 18px;
+  background: #4a4b4d;
+  border: 2px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  image-rendering: pixelated;
+}
+
+.logo-loader span {
+  background: transparent;
+}
+
+.logo-loader .lit {
+  background: #f5f5f0;
+  opacity: 0;
+  animation: pixelReveal 1.25s steps(1, end) infinite;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+@keyframes pixelReveal {
+  0%,
+  18% {
+    opacity: 0;
+  }
+
+  19%,
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 .mode-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -597,9 +644,20 @@ h1 {
   }
 
   .topbar,
+  .loading-panel,
   .mode-grid,
   .wallet-row {
     grid-template-columns: 1fr;
+  }
+
+  .loading-panel {
+    justify-items: start;
+  }
+
+  .logo-loader {
+    width: 118px;
+    height: 118px;
+    padding: 15px;
   }
 
   .home {

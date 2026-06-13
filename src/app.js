@@ -242,14 +242,7 @@ function renderRecentPlaceholders() {
 async function startGame() {
   state.boardType = "random";
   state.walletOwnedCount = 0;
-  app.innerHTML = `
-    <main class="setup shell">
-      <section class="setup-panel">
-        <h1>Building the board...</h1>
-        <p class="subtitle">Fetching Normies and balancing traits.</p>
-      </section>
-    </main>
-  `;
+  app.innerHTML = renderLoadingScreen("Building the board...", "Fetching Normies and balancing traits.");
 
   resetGame();
 
@@ -281,14 +274,10 @@ async function startWalletGame() {
     return;
   }
 
-  app.innerHTML = `
-    <main class="setup shell">
-      <section class="setup-panel">
-        <h1>Building the wallet board...</h1>
-        <p class="subtitle">Reading owned Normies and filling the board with wild Normies.</p>
-      </section>
-    </main>
-  `;
+  app.innerHTML = renderLoadingScreen(
+    "Building the wallet board...",
+    "Reading owned Normies and filling the board with wild Normies.",
+  );
 
   resetGame();
   state.boardType = "wallet";
@@ -324,6 +313,46 @@ async function startWalletGame() {
     document.querySelector("#retry-wallet").addEventListener("click", startWalletGame);
     document.querySelector("#back-setup").addEventListener("click", renderSetup);
   }
+}
+
+function renderLoadingScreen(title, subtitle) {
+  return `
+    <main class="setup shell">
+      <section class="setup-panel loading-panel">
+        <div class="logo-loader" aria-hidden="true">
+          ${renderLogoPixels()}
+        </div>
+        <div>
+          <h1>${escapeHtml(title)}</h1>
+          <p class="subtitle">${escapeHtml(subtitle)}</p>
+        </div>
+      </section>
+    </main>
+  `;
+}
+
+function renderLogoPixels() {
+  const logoRows = [
+    "000000000",
+    "000000000",
+    "000111110",
+    "000100010",
+    "001100010",
+    "001001010",
+    "001001010",
+    "001001010",
+    "000000000",
+  ];
+  let order = 0;
+  return logoRows
+    .flatMap((row) =>
+      [...row].map((cell) => {
+        const isLit = cell === "1";
+        const style = isLit ? ` style="--i:${order++}"` : "";
+        return `<span class="${isLit ? "lit" : ""}"${style}></span>`;
+      }),
+    )
+    .join("");
 }
 
 function resetGame() {
