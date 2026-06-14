@@ -190,7 +190,7 @@ h1 {
   flex-wrap: wrap;
   border: 2px solid var(--accent);
   background: rgba(255, 212, 90, 0.04);
-  padding: 12px;
+  padding: 8px;
 }
 
 .soon-band span,
@@ -198,14 +198,18 @@ h1 {
   border: 1px solid var(--line);
   background: #0d0e12;
   color: var(--accent);
-  padding: 7px 9px;
+  padding: 5px 8px;
   font-size: 12px;
+  line-height: 1;
   text-transform: uppercase;
 }
 
 .soon-band button {
   min-height: auto;
+  width: auto;
+  border-width: 1px;
   box-shadow: none;
+  cursor: pointer;
 }
 
 .section-heading {
