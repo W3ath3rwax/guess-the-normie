@@ -188,7 +188,13 @@ h1 {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: flex-start;
+  align-self: start;
+  justify-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
   border: 2px solid var(--accent);
   background: rgba(255, 212, 90, 0.04);
   padding: 8px;
@@ -659,6 +665,10 @@ a.recent-normie:hover {
   .soon-band,
   .home-footer {
     gap: 8px;
+  }
+
+  .soon-band {
+    width: 100%;
   }
 
   .launch-panel,
